@@ -1,0 +1,102 @@
+esphome:
+  name: "energy-meter"
+
+esp32:  
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret api_password
+ota:
+  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  ap:
+    ssid: "Energy-Meter Fallback Hotspot"
+    password: !secret wifi_fallback_ap_password
+
+  manual_ip:
+    static_ip: 192.168.178.131
+    gateway: 192.168.178.1
+    subnet: 255.255.255.0
+
+captive_portal:
+
+uart:
+  - id: uart_1
+    tx_pin: GPIO19
+    rx_pin: GPIO18
+    baud_rate: 9600
+    data_bits: 8
+    parity: NONE
+    stop_bits: 1
+  - id: uart_2
+    tx_pin: GPIO17
+    rx_pin: GPIO16
+    baud_rate: 9600
+    data_bits: 8
+    parity: NONE
+    stop_bits: 1
+
+sml:
+  - id: waerme_sml
+    uart_id: uart_1
+  - id: haus_sml
+    uart_id: uart_2
+
+sensor:
+  - platform: sml
+    name: "Total energy Wärmestrom [kWh]"
+    id: total_energy_waermestrom_kWh
+    sml_id: waerme_sml
+    server_id: "0649534b010e1f52c0cd"
+    obis_code: "1-0:1.8.0"
+    unit_of_measurement: kWh
+    accuracy_decimals: 2
+    device_class: energy
+    state_class: total_increasing
+    filters:
+      - multiply: 0.0001
+  - platform: sml
+    name: "Electric consumption Wärmestrom [W]"
+    id: electric_consumption_waermestrom_w
+    sml_id: waerme_sml
+    server_id: "0649534b010e1f52c0cd"
+    obis_code: "1-0:16.7.0"
+    unit_of_measurement: W
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+ 
+  - platform: sml
+    name: "Total energy Hausstrom [kWh]"
+    id: electric_consumption_hausestrom_w
+    sml_id: haus_sml
+    server_id: "0649534b010e1f52c0cc"
+    obis_code: "1-0:1.8.0"
+    unit_of_measurement: kWh
+    accuracy_decimals: 2
+    device_class: energy
+    state_class: total_increasing
+    filters:
+      - multiply: 0.0001
+
+  - platform: sml
+    name: "Electric consumption Hausstrom [W]"
+    id: electric_consumption_hausstrom_w
+    sml_id: haus_sml
+    server_id: "0649534b010e1f52c0cc"
+    obis_code: "1-0:16.7.0"
+    unit_of_measurement: W
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement  
+
