@@ -20,9 +20,10 @@ Connection:
 <img src="https://github.com/schmurgel-tg/esphome/blob/main/images/20230101_174032.jpg?raw=true" alt="connection" width="300" height="600" />
 Pinout:
 <br/>
-<img src="https://github.com/schmurgel-tg/esphome/blob/main/pinout.png?raw=true" alt="connection" width="300" height="600" />
+<img src="https://github.com/schmurgel-tg/esphome/blob/main/pinout.jpg?raw=true" alt="pinout" />
 <br/>
-
+<img src="https://github.com/schmurgel-tg/esphome/blob/main/ctrlPanel.jpg?raw=true" alt="Ctrl" />
+<br/>
 
 THX to:
 https://github.com/frami/org.openhab.binding.wr3223
