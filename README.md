@@ -16,7 +16,7 @@ Features:
 - status update at least every 20 seconds (default: 10s, can be configured in the UI)
 
 Connection:
-![Connection]((https://github.com/schmurgel-tg/esphome/blob/main/20230101_174032.jpg?raw=true))
+![Connection](https://github.com/schmurgel-tg/esphome/blob/main/images/20230101_174032.jpg?raw=true)
 
 THX to:
 https://github.com/frami/org.openhab.binding.wr3223
