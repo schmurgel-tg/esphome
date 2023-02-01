@@ -1,0 +1,84 @@
+esphome:
+  name: hochbeet-controller
+
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  manual_ip:
+    static_ip: 192.168.178.130
+    gateway: 192.168.178.1
+    subnet: 255.255.255.0
+
+  ap:
+    ssid: "Hochbeet Fallback Hotspot"
+    password: !secret wifi_fallback_ap_password
+
+output:
+  - platform: gpio
+    pin: 25
+    id: 'hochbeet_gpio25'
+  - platform: gpio
+    pin: 
+      number: 26
+      inverted: True
+    id: 'hochbeet_gpio26'
+  - platform: gpio
+    pin:
+      number: 27
+      inverted: True
+    id: 'hochbeet_gpio27'
+
+switch:
+  - platform: output
+    name: "Hochbeet Ventil"
+    output: 'hochbeet_gpio25'
+  - platform: output
+    name: "Hochbeet Steckdose 1"
+    output: 'hochbeet_gpio26'
+  - platform: output
+    name: "Hochbeet Steckdose 2"
+    output: 'hochbeet_gpio27'
+
+sensor:
+  - platform: adc
+    pin: 32
+    name: "Hochbeet Temperatur"
+    icon: "mdi:temperature-celsius"
+    attenuation: 11db
+    unit_of_measurement: '°C'
+    update_interval: 5s
+    filters:
+    - sliding_window_moving_average:
+        window_size: 18
+        send_every: 6
+    - lambda: return (x - 0.5) * 100;
+  - platform: adc
+    pin: 35
+    name: "Hochbeet Feuchtigkeit"
+    icon: "mdi:water-percent"
+    attenuation: 11db
+    unit_of_measurement: '%'
+    update_interval: 5s
+    filters:
+    - sliding_window_moving_average:
+        window_size: 18
+        send_every: 6
+    - lambda: return (x * 50) / 3;
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret api_password
+ota:
+  password: !secret ota_password
+    
