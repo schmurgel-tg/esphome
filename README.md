@@ -16,7 +16,7 @@ Features:
 - status update at least every 20 seconds (default: 10s, can be configured in the UI)
 
 Connection:
-![Connection](https://community.home-assistant.io/t/hermes-electronic-wr3223-ventilation-controller-esp32/485307/2)
+![Connection]((https://github.com/schmurgel-tg/esphome/blob/main/20230101_174032.jpg?raw=true))
 
 THX to:
 https://github.com/frami/org.openhab.binding.wr3223
