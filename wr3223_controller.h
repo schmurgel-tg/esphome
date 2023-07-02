@@ -53,6 +53,11 @@ namespace WR3223
     const CommandPair VentLv2Cmd = CommandPair(WR3223Commands::L2, ECommandResultType::Number);
     const CommandPair VentLv3Cmd = CommandPair(WR3223Commands::L3, ECommandResultType::Number);
 
+    const CommandPair ZuluftSoll = CommandPair(WR3223Commands::SP, ECommandResultType::Number);
+    const CommandPair ZuluftSollRe = CommandPair(WR3223Commands::Re, ECommandResultType::Number);
+    const CommandPair RaumsollRd = CommandPair(WR3223Commands::Rd, ECommandResultType::Number);
+
+    const CommandPair SommerstopEs = CommandPair(WR3223Commands::Es, ECommandResultType::Number);
     // const CommandPair AbtauStartCmd = CommandPair(WR3223Commands::AE, ECommandResultType::Number);
     // const CommandPair AbtauEndeCmd = CommandPair(WR3223Commands::AA, ECommandResultType::Number);
 
@@ -64,7 +69,7 @@ namespace WR3223
 
     // const CommandPair ZuluftCmd = CommandPair(WR3223Commands::LD, ECommandResultType::Number);
 
-    const static int cmdPairCount = 12;
+    const static int cmdPairCount = 16;
     const CommandPair Commands[cmdPairCount] = 
     {  
 
@@ -84,9 +89,13 @@ namespace WR3223
       ErrorCmd,      
 
       CommandPair(WR3223Commands::NA, LueftungSensor::drehzahl_abluft_sensor),
-      CommandPair(WR3223Commands::NZ, LueftungSensor::drehzahl_zuluft_sensor)
+      CommandPair(WR3223Commands::NZ, LueftungSensor::drehzahl_zuluft_sensor),
       
+      ZuluftSoll,
+      ZuluftSollRe,
+      RaumsollRd,
 
+      SommerstopEs
       //StatusWriteCmd,
       //LufstufeCmd 
     };
@@ -169,6 +178,7 @@ namespace WR3223
     {
 
       ESP_LOGI("Test_Read", "Status SW bit content: %s", readLine(StatusWriteCmd).c_str());
+      ESP_LOGI("Test_Read", "Status Ta bit content: %s", readLine(StatusUpdateCmd).c_str());
       statusHolder->restore_state_sw();
       //ESP_LOGD("MODUS", "L1: %s", readLine(TestCmd1));
       //ESP_LOGD("MODUS", "L2: %s", readLine(TestCmd2));
@@ -290,7 +300,7 @@ namespace WR3223
 // evtl. aus der Wärmepumpe, wenn sommermodus aktiv ist?!
     bool Get_Kuehlung_On()
     {
-      return false; // statusHolder->getCoolingOnStatus();
+      return statusHolder->getCoolingOnStatus();
     }
     
     bool Set_Kuehlung_On(bool pOn)
@@ -314,6 +324,20 @@ namespace WR3223
   
     bool write_current_status_sw()
     {
+      // try 
+      // {
+      //   float test = 18;
+      //   char const* sollTemp = std::to_string(test).substr(0,4).c_str();
+      //   connector->write(ZuluftSoll, sollTemp);
+      //   connector->write(ZuluftSollRe, sollTemp);
+      //   connector->write(RaumsollRd, sollTemp);
+      //   connector->write(SommerstopEs, sollTemp);
+      // }
+      // catch(const std::exception& e)
+      // {
+      //   ESP_LOGE("SOLLTEMP", "Fehler beim schreiben der Daten: %s", e.what()); 
+      // }    
+      
       char const* data = std::to_string((int)statusHolder->getSwStatus()).c_str();
       return connector->write(StatusWriteCmd, data);
     }

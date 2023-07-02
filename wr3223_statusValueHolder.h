@@ -90,9 +90,20 @@ namespace WR3223 {
         void setCoolingOn(bool coolingOn) 
         {
             if(coolingOn)
+            {
                 stateValueSW &= ~WR3223EnumStatusSW::COOLING_OFF;
+                stateValueSW &= ~WR3223EnumStatusSW::HEAT_PUMP_OFF;
+            }
             else
-                stateValueSW |= WR3223EnumStatusSW::COOLING_OFF;            
+            {
+                stateValueSW |= WR3223EnumStatusSW::COOLING_OFF;      
+                stateValueSW |= WR3223EnumStatusSW::HEAT_PUMP_OFF;       
+            }
+        }
+
+        bool getCoolingOnStatus()
+        {
+            return !(stateValueSW & WR3223EnumStatusSW::COOLING_OFF);
         }
 
         /**
@@ -157,9 +168,9 @@ namespace WR3223 {
             try
             {
                 int value = WR3223Helper::to_int(read, true);
-                //ESP_LOGD("VALUEHOLDER", "setSWStaus: %i", value);
+                ESP_LOGD("VALUEHOLDER", "setSWStaus: %i", value);
                 stateValueSW = value & WR3223EnumStatusSW::STATUS_MASK_SW;
-                //ESP_LOGD("VALUEHOLDER", "setSWStaus (masked): %i", stateValueSW);
+                ESP_LOGD("VALUEHOLDER", "setSWStaus (masked): %i", stateValueSW);
                 return true;
             }
             catch(const std::exception& e)
@@ -177,9 +188,9 @@ namespace WR3223 {
             try
             {    
                 int value = WR3223Helper::to_int(read, true);
-                //ESP_LOGD("VALUEHOLDER", "setTaStatus: %i", value);
+                ESP_LOGD("VALUEHOLDER", "setTaStatus: %i", value);
                 stateValueTa = value & WR3223EnumStatusTa::STATUS_MASK_TA;
-                //ESP_LOGD("VALUEHOLDER", "setTaStatus (masked): %i", stateValueTa);
+                ESP_LOGD("VALUEHOLDER", "setTaStatus (masked): %i", stateValueTa);
                 return true;
             }
             catch(const std::exception& e)

@@ -6,6 +6,17 @@ esp32:
   framework:
     type: arduino
 
+
+# Enable logging
+logger:   
+
+# Enable Home Assistant API
+api:
+  encryption: 
+    key: SgVlngoPSYM21kvk5N+GoARMPsz4NfYiUEEuPk7resA=
+ota:
+  password: !secret ota_password
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
@@ -70,15 +81,3 @@ sensor:
         window_size: 18
         send_every: 6
     - lambda: return (x * 50) / 3;
-
-captive_portal:
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  password: !secret api_password
-ota:
-  password: !secret ota_password
-    

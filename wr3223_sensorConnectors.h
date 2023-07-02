@@ -50,6 +50,12 @@ namespace LueftungSensor
     Sensor *drehzahl_zuluft_sensor = new Sensor();
 }
 
+namespace CustomSensors
+{    
+    TextSensor *customText = new TextSensor();    
+}
+
+
 namespace WR3223 
 {
     class WR3223TextSensorConnector : public Component 
@@ -58,9 +64,11 @@ namespace WR3223
         WR3223TextSensorConnector()
         {
             errorTextSensor = ErrorSensors::errorText;
+            customTextSensor = CustomSensors::customText;
         }
 
         TextSensor *errorTextSensor;
+        TextSensor *customTextSensor;
     };
 
     class WR3223BinarySensorConnector : public Component 

@@ -29,7 +29,8 @@ logger:
 
 # Enable Home Assistant API
 api:
-  password: !secret api_password
+  encryption: 
+    key: hwEyl6zTtFK+eaR4IDhFTcoUcWn5w2J8TP2Ta26qywE=  
 ota:
   password: !secret ota_password
 
@@ -71,9 +72,12 @@ text_sensor:
     lambda: |-
       auto wr3223Text = new WR3223::WR3223TextSensorConnector();
       App.register_component(wr3223Text);
-      return {wr3223Text->errorTextSensor};
+      return {wr3223Text->errorTextSensor,
+              wr3223Text->customTextSensor};
     text_sensors: 
       - name: "FEHLER-Text"
+        entity_category: diagnostic
+      - name: "Custom-Text"
         entity_category: diagnostic
 
 # das sollte hier genau übereinstimme, die flags des modus passen hier zum index

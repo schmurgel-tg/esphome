@@ -226,6 +226,12 @@ namespace WR3223 {
     // Zuluftsoll Temperatur auslesen/schreiben (nur bei PC Steuerung) 
     static constexpr const char *SP = "SP";
 
+    // Zulufttemperatur Sollwert
+    static constexpr const char *Re = "Re";
+
+    // Raumsollwert
+    static constexpr const char *Rd = "Rd";
+
     // Mode auslesen/schreiben (nur bei PC Steuerung) 
     static constexpr const char *MD = "MD";
 
