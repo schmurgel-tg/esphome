@@ -69,7 +69,7 @@ namespace WR3223
             else if(static_cast<bool>(pMode & WR3223EnumModus::SOMMER_ABLUFT))
                 return "Sommer-Abluftbetrieb";
             else if(static_cast<bool>(pMode & WR3223EnumModus::SOMMER_BETRIEB))
-                return "Sommebetrieb";
+                return "Sommerbetrieb";
             else
                 return "AUS";
         }  

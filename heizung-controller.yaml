@@ -87,7 +87,7 @@ select:
     id: "select_betriebsmodus"    
     options:             
       - "AUS"       
-      - "Sommebetrieb"
+      - "Sommerbetrieb"
       - "Sommer-Abluftbetrieb"
       - "Winterbetrieb"      
       - "Handbetrieb"          
